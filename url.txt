@@ -1,0 +1,8 @@
+https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=
+https://www.google.com/search?q=
+https://www.youtube.com/results?search_query=
+https://search.daum.net/search?w=tot&q=
+https://stackoverflow.com/search?q=
+https://www.kw.ac.kr/ko/info/search.jsp?mode=list&srSearchField=all&srSearchOperator=or&searchVal=
+https://search.danawa.com/dsearch.php?query=
+http://fow.kr/find/

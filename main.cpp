@@ -5,221 +5,257 @@
 #include <shellapi.h>
 #include <vector>
 
-
 using namespace std;
 
-string google = "https://www.google.com/search?q=";
-string naver = "https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=0&ie=utf8&query=";
-string youtube = "https://www.youtube.com/results?search_query=";
-string daum = "https://search.daum.net/search?w=tot&q=";
-string kw = "https://www.kw.ac.kr/ko/info/search.jsp?mode=list&srSearchField=all&srSearchOperator=or&searchVal=";
-string stackoverflow = "https://stackoverflow.com/search?q=";
-string danawa = "https://search.danawa.com/dsearch.php?k1=";
-string fow = "http://fow.kr/find/";
-string chrome = "chrome";
-string edge = "msedge";
-string iexplorer = "iexplore";
+vector<string> Urls;
+vector<string> Sites;
+vector<string> Browsers;
 
-enum site
+void showUrls(void)
 {
-    GOOGLE=1,
-    NAVER,
-    YOUTUBE,
-    DAUM,
-    KW,
-    STACKOVERFLOW,
-    DANAWA,
-    FOW
-};
-enum browser
+	int num = 1;
+	cout << "----URL 목록--------------------" << '\n';
+	for (string x : Urls)
+	{
+		cout << num << ". " << x << '\n';
+		num++;
+	}
+	cout << "-----------------------------------" << "\n\n";
+}
+
+void showSites(void)
 {
-    CHROME=1, EDGE, IEXPLORER
-};
+	int num = 1;
+	cout << "----사이트 목록--------------------" << '\n';
+	for (string x : Sites)
+	{
+		cout << num << ". " << x << '\n';
+		num++;
+	}
+	cout << "-----------------------------------" << "\n\n";
+}
+
+void showBrowsers(void)
+{
+	int num = 1;
+	cout << "----브라우저 목록------------------" << '\n';
+	for (string x : Browsers)
+	{
+		cout << num << ". " << x << '\n';
+		num++;
+	}
+	cout << "-----------------------------------" << "\n\n";
+}
+
+void makeUrls(void)
+{
+	ifstream fin("url.txt");
+	if (fin.fail())
+	{
+		cerr << "Failed to load!" << '\n';
+		exit(100);
+	}
+	string line;
+	while (!fin.eof())
+	{
+		getline(fin, line);
+		Urls.push_back(line);
+	}
+	showUrls();
+	fin.close();
+}
+
+void makeSites(void)
+{
+	ifstream fin("site.txt");
+	if (fin.fail())
+	{
+		cerr << "Failed to load!" << '\n';
+		exit(100);
+	}
+	string line;
+	while (!fin.eof())
+	{
+		getline(fin, line);
+		Sites.push_back(line);
+	}
+	showSites();
+	fin.close();
+}
+
+void makeBrowsers(void)
+{
+	ifstream fin("browser.txt");
+	if (fin.fail())
+	{
+		cerr << "Failed to load!" << '\n';
+		exit(100);
+	}
+	string line;
+	while (!fin.eof())
+	{
+		getline(fin, line);
+		Browsers.push_back(line);
+	}
+	showBrowsers();
+	fin.close();
+}
+
+void reloadList(void)
+{
+	ofstream foutUrl("url.txt");
+	ofstream foutSite("site.txt");
+	ofstream foutBrowser("browser.txt");
+	for (int i = 0; i < Urls.size(); i++)
+	{
+		if (i == Urls.size() - 1)
+			foutUrl << Urls[i];
+		else
+			foutUrl << Urls[i] << endl;
+	}
+	for (int i = 0; i < Sites.size(); i++)
+	{
+		if (i == Sites.size() - 1)
+			foutSite << Sites[i];
+		else
+			foutSite << Sites[i] << endl;
+	}
+	for (int i = 0; i < Browsers.size(); i++)
+	{
+		if (i == Browsers.size() - 1)
+			foutBrowser << Browsers[i];
+		else
+			foutBrowser << Browsers[i] << endl;
+	}
+	foutUrl.close();
+	foutSite.close();
+	foutBrowser.close();
+}
+
+void addUrlAndSite(void)
+{
+	string urlName;
+	string siteName;
+	cout << "사이트 주소를 입력하세요. : ";
+	cin >> urlName;
+	cin.ignore();
+	cout << "사이트 이름을 입력하세요. : ";
+	cin >> siteName;
+	cin.ignore();
+	Urls.push_back(urlName);
+	Sites.push_back(siteName);
+	reloadList();
+	showUrls();
+	showSites();
+}
+
+void delUrlAndSite(void)
+{
+	int pos;
+	cout << "제거할 사이트의 번호를 입력하세요. : ";
+	cin >> pos;
+	Urls.erase(Urls.begin() + pos - 1);
+	Sites.erase(Sites.begin() + pos - 1);
+	reloadList();
+	showUrls();
+	showSites();
+}
+
+void addBrowser(void)
+{
+	string browserName;
+	cout << "브라우저의 원래의 파일명을 정확하게 입력하세요! : ";
+	cin >> browserName;
+	Browsers.push_back(browserName);
+	reloadList();
+	showBrowsers();
+}
+
+void delBrowser(void)
+{
+	int pos;
+	cout << "제거할 브라우저의 번호를 입력하세요. : ";
+	cin >> pos;
+	Browsers.erase(Browsers.begin() + pos - 1);
+	reloadList();
+	showBrowsers();
+}
 
 wstring s2ws(const string& s)
 {
-    int len;
-    int slength = (int)s.length() + 1;
-    len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-    wchar_t* buf = new wchar_t[len];
-    MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-    wstring r(buf);
-    delete[] buf;
-    return r;
-}
-void openSearch(string site, string brows, string word)
-{
-    string url;
-    wstring urlTemp;
-    LPCWSTR urlResult;
-    wstring browserTemp;
-    LPCWSTR browserResult;
-    url = site + word;
-    urlTemp = s2ws(url);
-    urlResult = urlTemp.c_str();
-    browserTemp = s2ws(brows);
-    browserResult = browserTemp.c_str();
-    ShellExecute(NULL, L"open", browserResult, urlResult, NULL, SW_SHOW);
+	int len;
+	int slength = (int)s.length() + 1;
+	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
+	wchar_t* buf = new wchar_t[len];
+	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
+	wstring r(buf);
+	delete[] buf;
+	return r;
 }
 
-void doSwitch(int countSite, int countBrowser, string searchWord)
+void openSearch(string site, string brows, string word)
 {
-    switch (countSite)
-    {
-    case site::GOOGLE:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(google, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(google, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(google, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    case site::NAVER:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(naver, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(naver, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(naver, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    case site::YOUTUBE:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(youtube, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(youtube, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(youtube, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    case site::DAUM:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(daum, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(daum, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(daum, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    case site::KW:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(kw, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(kw, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(kw, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    case site::STACKOVERFLOW:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(stackoverflow, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(stackoverflow, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(stackoverflow, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    case site::DANAWA:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(danawa, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(danawa, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(danawa, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    case site::FOW:
-        switch (countBrowser)
-        {
-        case browser::CHROME:
-            openSearch(fow, chrome, searchWord);
-            break;
-        case browser::EDGE:
-            openSearch(fow, edge, searchWord);
-            break;
-        case browser::IEXPLORER:
-            openSearch(fow, iexplorer, searchWord);
-            break;
-        default:
-            cout << "ERROR!";
-            break;
-        }
-        break;
-    default:
-        cout << "ERROR!";
-        break;
-    }
+	string url;
+	wstring urlTemp;
+	LPCWSTR urlResult;
+	wstring browserTemp;
+	LPCWSTR browserResult;
+	url = site + word;
+	urlTemp = s2ws(url);
+	urlResult = urlTemp.c_str();
+	browserTemp = s2ws(brows);
+	browserResult = browserTemp.c_str();
+	ShellExecute(NULL, L"open", browserResult, urlResult, NULL, SW_SHOW);
+}
+
+void readyToSearch(void)
+{
+	int siteNum = 0;
+	int browserNum = 0;
+	string searchWord;
+	cout << "검색을 할 사이트의 번호를 입력하세요. : ";
+	cin >> siteNum;
+	cin.ignore();
+	cout << "브라우저의 번호를 입력하세요. : ";
+	cin >> browserNum;
+	cin.ignore();
+	cout << "검색어를 입력하세요. : ";
+	cin >> searchWord;
+	cin.ignore();
+	openSearch(Urls[siteNum - 1], Browsers[browserNum - 1], searchWord);
+}
+
+void manyCases(void)
+{
+	int a;
+	while (1)
+	{
+		cout << "add site = 1\ndel site = 2\nexit = 3\nadd browser = 4\ndel browser = 5\nSearch = 6\n: ";
+		cin >> a;
+		if (a == 1)
+			addUrlAndSite();
+		else if (a == 2)
+			delUrlAndSite();
+		else if (a == 3)
+		{
+			cout << "Thank you!";
+			return;
+		}
+		else if (a == 4)
+			addBrowser();
+		else if (a == 5)
+			delBrowser();
+		else if (a == 6)
+			readyToSearch();
+		else
+			cout << "다시 입력하세요.\n";
+	}
 }
 
 int main(void)
 {
-    int countSite = 0;
-    int countBrowser = 0;
-    string searchWord;
-    cout << "0. 구글\n" << "1. 네이버\n" << "2. 유튜브\n" << "3. 다음\n" << "4. 광운대\n" << "5. 스택오버플로\n" << "6. 다나와\n" << "7. 포우\n" << "검색할 사이트를 선택하세요. : ";
-    cin >> countSite;
-    cin.ignore();
-    cout << "\n0. 크롬\n" << "1. 엣지\n" << "2. 익스플로러\n" << "브라우저를 선택하세요 : ";
-    cin >> countBrowser;
-    cin.ignore();
-    cout << "\n검색어를 입력하세요. : ";
-    getline(cin, searchWord);
-    doSwitch(countSite, countBrowser, searchWord);
+	makeUrls();
+	makeSites();
+	makeBrowsers();
+	manyCases();
 }
