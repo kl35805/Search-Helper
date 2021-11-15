@@ -31,18 +31,6 @@
 #include "del.h"
 //*>
 
-std::wstring s2ws(const std::string& s)
-{
-	int len;
-	int slength = (int)s.length() + 1;
-	len = MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, 0, 0);
-	wchar_t* buf = new wchar_t[len];
-	MultiByteToWideChar(CP_ACP, 0, s.c_str(), slength, buf, len);
-	std::wstring r(buf);
-	delete[] buf;
-	return r;
-}
-
 void openSearch(const std::string& site, const std::string& brows, const std::string& word)
 {
 	std::string url;
@@ -51,9 +39,9 @@ void openSearch(const std::string& site, const std::string& brows, const std::st
 	std::wstring browserTemp;
 	LPCWSTR browserResult;
 	url = site + word;
-	urlTemp = s2ws(url);
+	urlTemp = nana::to_wstring(url);
 	urlResult = urlTemp.c_str();
-	browserTemp = s2ws(brows);
+	browserTemp = nana::to_wstring(brows);
 	browserResult = browserTemp.c_str();
 	ShellExecute(NULL, L"open", browserResult, urlResult, NULL, SW_SHOW);
 }
