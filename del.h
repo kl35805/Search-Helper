@@ -29,6 +29,7 @@ class del
 	: public nana::form
 {
 public:
+	void del_clear();
 	del(kid* kk, const std::vector<std::string>& v, const std::map<std::string, std::string>& m, nana::window wd, const ::nana::size& sz = { 380, 180 }, const nana::appearance& apr = { true, true, false, false, false, false, false });
 	~del();
 

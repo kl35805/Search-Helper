@@ -47,6 +47,15 @@ void del::init_()
 	place_.collocate();
 }
 
+void del::del_clear()
+{
+	std::vector<std::string>().swap(Browsers);
+	std::map<std::string, std::string>().swap(Websites);
+	std::vector<std::string>().swap(Sites);
+	std::vector<std::string>().swap(Urls);
+	k = NULL;
+}
+
 del::del(kid* kk, const std::vector<std::string>& v, const std::map<std::string, std::string>& m, nana::window wd, const ::nana::size& sz, const nana::appearance& apr) : nana::form(wd, sz, apr)
 {
 	init_();
@@ -87,6 +96,7 @@ del::del(kid* kk, const std::vector<std::string>& v, const std::map<std::string,
 			}
 			bout.close();
 			alert a(k, this, 0);
+			del_clear();
 			a.show();
 			nana::exec();
 		});
@@ -130,6 +140,7 @@ del::del(kid* kk, const std::vector<std::string>& v, const std::map<std::string,
 			sout.close();
 			uout.close();
 			alert a(k, this, 0);
+			del_clear();
 			a.show();
 			nana::exec();
 		});
