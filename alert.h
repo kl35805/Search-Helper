@@ -15,55 +15,21 @@
 #include <nana/gui/place.hpp>
 #include <nana/gui/widgets/label.hpp>
 #include <nana/gui/widgets/button.hpp>
+#include <cstdlib>
 
 //<*includes
-
 //*>
-
 
 class alert
 	: public nana::form
 {
 public:
-	alert(nana::window wd, const ::nana::size& sz = {400, 200}, const nana::appearance& apr = {true, true, false, false, false, false, false})
-		: nana::form(wd, sz, apr)
-	{
-		init_();
-
-		//<*ctor
-		button1.events().click(nana::API::exit);
-		//*>
-	}
-
-	~alert()
-	{
-		//<*dtor
-
-		//*>
-	}
-
+	void reload();
+	alert(kid* kk, nana::form* ff, nana::window wd, const ::nana::size& sz = { 200, 100 }, const nana::appearance& apr = { true, true, false, false, false, false, false });
+	~alert();
 
 private:
-	void init_()
-	{
-		place_.bind(*this);
-		place_.div("vert margin=[5,5,5,5] gap=2 _field_");
-		caption("Alert");
-		// label1
-		label1.create(*this);
-		place_["_field_"] << label1;
-		label1.typeface(nana::paint::font("", 16, {400, false, false, false}));
-		label1.caption("You need to restart program.");
-		label1.text_align(static_cast<nana::align>(1), static_cast<nana::align_v>(1));
-		// button1
-		button1.create(*this);
-		place_["_field_"] << button1;
-		button1.typeface(nana::paint::font("", 16, {400, false, false, false}));
-		button1.caption("restrart");
-
-		place_.collocate();
-	}
-
+	void init_();
 
 protected:
 	nana::place place_;
@@ -72,7 +38,8 @@ protected:
 
 
 	//<*declarations
-
+	kid* k;
+	form* f;
 	//*>
 };
 

@@ -1,4 +1,6 @@
 chrome
-msedge
-iexplore
+safari
 firefox
+whale
+msedge
+launcher

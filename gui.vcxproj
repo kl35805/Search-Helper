@@ -149,6 +149,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="add.cpp" />
+    <ClCompile Include="alert.cpp" />
+    <ClCompile Include="del.cpp" />
+    <ClCompile Include="kid.cpp" />
     <ClCompile Include="main_gui.cpp" />
   </ItemGroup>
   <ItemGroup>
