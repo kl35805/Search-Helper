@@ -1,0 +1,7 @@
+./browsers_icon/chrome.bmp
+./browsers_icon/safari.bmp
+./browsers_icon/firefox.bmp
+./browsers_icon/whale.bmp
+./browsers_icon/msedge.bmp
+./browsers_icon/launcher.bmp
+./browsers_icon/iexplorer.bmp

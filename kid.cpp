@@ -1,3 +1,7 @@
+#include "kid.h"
+#include "add.h"
+#include "del.h"
+#include "alert.h"
 #include <nana/gui.hpp>
 #include <nana/gui/place.hpp>
 #include <nana/gui/widgets/combox.hpp>
@@ -5,61 +9,24 @@
 #include <nana/gui/widgets/panel.hpp>
 #include <nana/gui/widgets/button.hpp>
 #include <nana/gui/widgets/textbox.hpp>
+#include <iostream>
+#include <fstream>
+#include <Windows.h>
+#include <shellapi.h>
 #include <string>
 #include <vector>
 #include <map>
-#include <Windows.h>
-#include <shellapi.h>
-#include <iostream>
-#include <fstream>
-#include "kid.h"
-#include "add.h"
-#include "del.h"
 
-void openSearch(const std::string& site, const std::string& brows, const std::string& word)
+void kid::set_ptr(add* aa, del* dd, alert* ale)
 {
-	std::string url;
-	std::wstring urlTemp;
-	LPCWSTR urlResult;
-	std::wstring browserTemp;
-	LPCWSTR browserResult;
-	url = site + word;
-	urlTemp = nana::to_wstring(url);
-	urlResult = urlTemp.c_str();
-	browserTemp = nana::to_wstring(brows);
-	browserResult = browserTemp.c_str();
-	ShellExecute(NULL, L"open", browserResult, urlResult, NULL, SW_SHOW);
+	a = aa;
+	d = dd;
+	al = ale;
 }
 
-void kid::variables_clear()
+void kid::makeBrowsers()
 {
-	std::vector<std::string>().swap(Browsers);
-	std::map<std::string, std::string>().swap(Websites);
-}
-void kid::comboxs_clear()
-{
-	browser.clear();
-	site.clear();
-}
-
-void kid::load_list(void)
-{
-	int i = 0;
-	for (i = 0; i < Browsers.size(); i++)
-		browser.push_back(Browsers[i]);
-	std::map<std::string, std::string>::iterator it;
-	for (it = Websites.begin(); it != Websites.end(); it++)
-		site.push_back(it->first);
-}
-
-void kid::makeBrowsers(void)
-{
-	std::ifstream bin("browser.txt");
-	if (bin.fail())
-	{
-		std::cerr << "Failed to load!" << '\n';
-		exit(100);
-	}
+	std::ifstream bin("./txts/userbrowser.txt");
 	std::string bline;
 	while (!bin.eof())
 	{
@@ -69,123 +36,140 @@ void kid::makeBrowsers(void)
 	bin.close();
 }
 
-void kid::makeWebsites(void)
+void kid::makeUrls()
 {
-	std::ifstream sin("site.txt");
-	if (sin.fail())
-	{
-		std::cerr << "Failed to load!" << '\n';
-		exit(0);
-	}
-	std::ifstream uin("url.txt");
-	if (uin.fail())
-	{
-		std::cerr << "Failed to load!" << '\n';
-		exit(0);
-	}
-	std::string sline;
+	std::ifstream unin("./txts/usersite.txt");
+	std::ifstream uuin("./txts/userurl.txt");
+	std::string nline;
 	std::string uline;
-	while (!sin.eof() || !uin.eof())
+	while (!unin.eof())
+	{
+		getline(unin, nline);
+		getline(uuin, uline);
+		nana::to_utf8(nline);
+		Website_Urls.insert({ nline,uline });
+	}
+	unin.close();
+	uuin.close();
+}
+
+void kid::makeBicons()
+{
+	std::ifstream bin("./txts/browser.txt");
+	std::ifstream iin("./txts/bicon.txt");
+	std::string bline;
+	std::string iline;
+	while (!bin.eof())
+	{
+		getline(bin, bline);
+		getline(iin, iline);
+		Browser_Icons.insert({ bline,iline });
+	}
+	bin.close();
+	iin.close();
+}
+
+void kid::makeSicons()
+{
+	std::ifstream sin("./txts/site.txt");
+	std::ifstream iin("./txts/sicon.txt");
+	std::string sline;
+	std::string iline;
+	while (!sin.eof())
 	{
 		getline(sin, sline);
-		getline(uin, uline);
-		Websites.insert({ sline,uline });
+		getline(iin, iline);
+		Website_Icons.insert({ sline,iline });
 	}
 	sin.close();
-	uin.close();
+	iin.close();
 }
 
-void kid::init_()
+void kid::set_comboxs()
 {
-	place_.bind(*this);
-	place_.div("vert margin=[5,5,5,5] <margin=[5,5,5,5] <margin=[25,15,10,15] gap=2 left_eyebrow><margin=[5,5,5,5] gap=2 between><margin=[25,15,10,15] gap=2 right_eyebrow>><margin=[5,5,5,5] <margin=[0,15,0,15] gap=2 left_eye><margin=[25,40,0,40] gap=2 nose><margin=[0,15,0,15] gap=2 right_eye>><margin=[20,45,20,45] gap=2 arrange=[variable,30] mouse>");
-	caption("Win_Search_Helper");
-	bgcolor(nana::color(255, 223, 196));
-	// browser
-	browser.create(*this);
-	place_["left_eyebrow"] << browser;
-	browser.bgcolor(nana::color(0, 0, 0));
-	browser.fgcolor(nana::color(0, 0, 0));
-	browser.option(0);
-	// site
-	site.create(*this);
-	place_["right_eyebrow"] << site;
-	site.bgcolor(nana::color(0, 0, 0));
-	site.fgcolor(nana::color(0, 0, 0));
-	site.option(0);
-	// bicon
-	bicon.create(*this);
-	place_["left_eye"] << bicon;
-	bicon.align(static_cast<nana::align>(0), static_cast<nana::align_v>(0));
-	// nose_color
-	nose_color.create(*this);
-	nose_color_place_.bind(nose_color);
-	nose_color_place_.div("margin=[15,5,0,5] gap=2 _field_");
-	nose_color.bgcolor(nana::color(205, 178, 69));
-	place_["nose"] << nose_color;
-	// goto_add
-	goto_add.create(nose_color);
-	nose_color_place_["_field_"] << goto_add;
-	goto_add.bgcolor(nana::color(0, 0, 0));
-	goto_add.fgcolor(nana::color(255, 255, 255));
-	goto_add.caption("+");
-	// goto_del
-	goto_del.create(nose_color);
-	nose_color_place_["_field_"] << goto_del;
-	goto_del.bgcolor(nana::color(0, 0, 0));
-	goto_del.fgcolor(nana::color(255, 255, 255));
-	goto_del.caption("-");
-	// sicon
-	sicon.create(*this);
-	place_["right_eye"] << sicon;
-	sicon.align(static_cast<nana::align>(0), static_cast<nana::align_v>(0));
-	// searchbar
-	searchbar.create(*this);
-	place_["mouse"] << searchbar;
-	searchbar.bgcolor(nana::color(255, 0, 0));
-	searchbar.typeface(nana::paint::font("", 10, { 400, false, false, false }));
-	searchbar.multi_lines(false);
-	searchbar.focus_behavior(static_cast<nana::textbox::text_focus_behavior>(1));
-	searchbar.text_align(static_cast<nana::align>(1));
-	// letsgo
-	letsgo.create(*this);
-	place_["mouse"] << letsgo;
-	letsgo.caption("go!");
-
-	place_.collocate();
-	nose_color_place_.collocate();
+	for (int i = 0; i < Browsers.size(); i++)
+		browser.push_back(Browsers[i]);
+	std::map<std::string, std::string>::iterator uit;
+	for (uit = Website_Urls.begin(); uit != Website_Urls.end(); uit++)
+		site.push_back(uit->first);
 }
 
-kid::kid(nana::window wd, const ::nana::size& sz, const nana::appearance& apr) : nana::form(wd, sz, apr)
+void kid::reg_events()
 {
-	init_();
-	//<*ctor
-	makeBrowsers();
-	makeWebsites();
-	load_list();
-	letsgo.events().click([=]
-		{
-			std::string input = searchbar.text();
-			std::string cur_browser = browser.text(browser.option());
-			std::string cur_site = (Websites.find(site.text(site.option())))->second;
-			openSearch(cur_site, cur_browser, input);
-		});
 	goto_add.events().click([=]
 		{
-			add a(this, 0);
-			a.show();
+			a->show();
 			nana::exec();
 		});
 	goto_del.events().click([=]
 		{
-			del d(this, Browsers, Websites, 0);
-			d.show();
+			d->set_variables(Browsers, Website_Urls);
+			d->load_list();
+			d->show();
 			nana::exec();
 		});
-	//*>
+	letsgo.events().click([=]
+		{
+			open_search();
+		});
+	browser.events().text_changed([=]
+		{
+			std::string cur_brws = browser.text(browser.option());
+			std::map<std::string, std::string>::iterator it;
+			for (it = Browser_Icons.begin(); it != Browser_Icons.end(); it++)
+			{
+				if (it->first == cur_brws)
+				{
+					nana::paint::image bimage(it->second);
+					bicon.load(bimage);
+					bicon.stretchable(0, 0, 0, 0);
+					return;
+				}
+			}
+			nana::paint::image uimage("./browsers_icon/user.bmp");
+			bicon.load(uimage);
+			bicon.stretchable(0, 0, 0, 0);
+		});
+	site.events().text_changed([=]
+		{
+			std::string cur_site = site.text(site.option());
+			if (Website_Icons.find(cur_site) != Website_Icons.end())
+			{
+				nana::paint::image simage(Website_Icons.find(cur_site)->second);
+				sicon.load(simage);
+				sicon.stretchable(0, 0, 0, 0);
+			}
+			else
+			{
+				nana::paint::image uimage("./websites_icon/user.bmp");
+				sicon.load(uimage);
+				sicon.stretchable(0, 0, 0, 0);
+			}
+		});
+}
+void kid::reset_comboxs()
+{
+	browser.clear();
+	site.clear();
+	set_comboxs();
 }
 
-kid::~kid()
+void kid::reset_variables()
 {
-	delete this;
+	std::vector<std::string>().swap(Browsers);
+	std::map<std::string, std::string>().swap(Website_Urls);
+	makeBrowsers();
+	makeUrls();
+}
+
+void kid::open_search()
+{
+	std::string btemp = browser.text(browser.option());
+	std::string utemp = (Website_Urls.find(site.text(site.option()))->second);
+	std::string itemp = searchbar.text();
+	std::wstring brwstemp = nana::to_wstring(btemp);
+	std::wstring inputtemp = nana::to_wstring(utemp + itemp);
+	LPCWSTR brws = brwstemp.c_str();
+	LPCWSTR input = inputtemp.c_str();
+	ShellExecute(NULL, L"open", brws, input, NULL, SW_SHOW);
 }

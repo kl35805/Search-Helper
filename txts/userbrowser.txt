@@ -1,0 +1,7 @@
+chrome
+safari
+firefox
+whale
+msedge
+launcher
+iexplorer
