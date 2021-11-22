@@ -4,7 +4,7 @@
 #include "add.h"
 #include "del.h"
 #include "alert.h"
-#include "init_browser.h"
+//#include "init_browser.h"
 
 using namespace nana;
 
