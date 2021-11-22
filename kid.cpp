@@ -110,7 +110,11 @@ void kid::reg_events()
 		});
 	letsgo.events().click([=]
 		{
+			searchbar.hide();
+			upper_lip.move(nana::rectangle(49, 151, 270, 12));
+			lower_lip.move(nana::rectangle(49, 163, 270, 12));
 			open_search();
+			searchbar.caption("");
 		});
 	browser.events().text_changed([=]
 		{
@@ -129,7 +133,21 @@ void kid::reg_events()
 			nana::paint::image uimage("./browsers_icon/user.bmp");
 			bicon.load(uimage);
 			bicon.stretchable(0, 0, 0, 0);
+			left_eyebrow.show();
+			left_eyebrow_click = false;
 		});
+	browser.events().mouse_leave([&]() {
+		browser.hide();
+		left_eyebrow.show();
+		left_eyebrow_click = false;
+	});
+	left_eyebrow.events().click([&] {
+		if (left_eyebrow_click == false) {
+			left_eyebrow.hide();
+			browser.show();
+			left_eyebrow_click = true;
+		}
+	});
 	site.events().text_changed([=]
 		{
 			std::string cur_site = site.text(site.option());
@@ -145,7 +163,37 @@ void kid::reg_events()
 				sicon.load(uimage);
 				sicon.stretchable(0, 0, 0, 0);
 			}
+			sicon.stretchable(0, 0, 0, 0);
+			right_eyebrow.show();
+			right_eyebrow_click = false;
 		});
+	site.events().mouse_leave([&]() {
+		site.hide();
+		right_eyebrow.show();
+		right_eyebrow_click = false;
+	});
+	right_eyebrow.events().click([&] {
+		if (right_eyebrow_click == false) {
+			right_eyebrow.hide();
+			site.show();
+			right_eyebrow_click = true;
+		}
+	});
+	upper_lip.events().click([&]() {
+		searchbar.show();
+		upper_lip.move(nana::rectangle(49, 139, 270, 12));
+		lower_lip.move(nana::rectangle(49, 175, 270, 12));
+	});
+	lower_lip.events().click([&]() {
+		searchbar.show();
+		upper_lip.move(nana::rectangle(49, 139, 270, 12));
+		lower_lip.move(nana::rectangle(49, 175, 270, 12));
+	});
+//	searchbar.events().mouse_leave([&]() {
+//		searchbar.hide();
+//		upper_lip.move(nana::rectangle(49, 151, 270, 12));
+//		lower_lip.move(nana::rectangle(49, 163, 270, 12));
+//	});
 }
 void kid::reset_comboxs()
 {

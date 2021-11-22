@@ -61,7 +61,7 @@ private:
 	void init_()
 	{
 		place_.bind(*this);
-		place_.div("vert margin=[5,5,5,5] <margin=[5,5,5,5] <margin=[25,15,10,15] gap=2 left_eyebrow><margin=[5,5,5,5] gap=2 between><margin=[25,15,10,15] gap=2 right_eyebrow>><margin=[5,5,5,5] <margin=[0,15,0,15] gap=2 left_eye><margin=[25,40,0,40] gap=2 nose><margin=[0,15,0,15] gap=2 right_eye>><margin=[20,45,20,45] gap=2 arrange=[variable,30] mouse>");
+		place_.div("vert margin=[5,5,5,5] <margin=[5,5,5,5] <margin=[25,15,10,15] gap=2 left_eyebrow><margin=[5,5,5,5] gap=2 between><margin=[25,15,10,15] gap=2 right_eyebrow>><margin=[5,5,5,5] <margin=[0,30,0,30] gap=2 left_eye><margin=[25,40,0,40] gap=2 nose><margin=[0,30,0,30] gap=2 right_eye>><margin=[20,45,20,45] gap=2 arrange=[variable,30] mouse>");
 		caption("Win_Search_Helper");
 		bgcolor(nana::color(255, 223, 196));
 		// browser
@@ -69,11 +69,17 @@ private:
 		place_["left_eyebrow"] << browser;
 		browser.bgcolor(nana::color(0,0,0));
 		browser.fgcolor(nana::color(0,0,0));
+		// left eyebrow
+		left_eyebrow.create(*this, nana::rectangle(23, 35, 98, 20));
+		left_eyebrow.bgcolor(nana::colors::black);
 		// site
 		site.create(*this);
 		place_["right_eyebrow"] << site;
 		site.bgcolor(nana::color(0,0,0));
 		site.fgcolor(nana::color(0,0,0));
+		// right eyebrow
+		right_eyebrow.create(*this, nana::rectangle(23 + 255, 35, 98, 20));
+		right_eyebrow.bgcolor(nana::colors::black);
 		// bicon
 		bicon.create(*this);
 		place_["left_eye"] << bicon;
@@ -108,6 +114,11 @@ private:
 		searchbar.bgcolor(nana::color(255,0,0));
 		searchbar.typeface(nana::paint::font("", 10, {400, false, false, false}));
 		searchbar.multi_lines(false);
+		// mouse
+		upper_lip.create(*this, nana::rectangle(49, 151, 270, 12));
+		upper_lip.bgcolor(nana::color(250, 100, 100));
+		lower_lip.create(*this, nana::rectangle(49, 163, 270, 12));
+		lower_lip.bgcolor(nana::color(250, 100, 100));
 		// letsgo
 		letsgo.create(*this);
 		place_["mouse"] << letsgo;
@@ -130,6 +141,18 @@ protected:
 	nana::picture sicon;
 	nana::textbox searchbar;
 	nana::button letsgo;
+
+	// eyebrow
+	nana::picture left_eyebrow;
+	nana::picture right_eyebrow;
+	bool left_eyebrow_click = false;
+	bool right_eyebrow_click = false;
+
+	// mouse
+	nana::picture upper_lip;
+	nana::picture lower_lip;
+	bool mouse_click = false;
+
 	add* a;
 	del* d;
 	alert* al;
