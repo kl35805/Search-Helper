@@ -12,21 +12,17 @@
 #include <map>
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 using namespace nana;
 using namespace std;
 
-void del::set_ptr(kid* kk, add* aa, alert* ale)
-{
-	k = kk;
-	a = aa;
-	al = ale;
-}
 void del::set_variables(const vector<string>& vv, const map<string, string>& m1)
 {
 	Browsers = vv;
 	Website_Urls = m1;
 }
+
 void del::load_list()
 {
 	for (int i = 0; i < Browsers.size(); i++)
@@ -36,8 +32,9 @@ void del::load_list()
 		site_list.push_back(uit->first);
 }
 
-del::del(nana::window wd, const ::nana::size& sz, const nana::appearance& apr): nana::form(wd, sz, apr)
+del::del(kid* kk, nana::window wd, const ::nana::size& sz, const nana::appearance& apr): nana::form(wd, sz, apr)
 {
+	k = kk;
 	init_();
 
 	//<*ctor
@@ -62,8 +59,11 @@ del::del(nana::window wd, const ::nana::size& sz, const nana::appearance& apr): 
 					bout << *it << std::endl;
 			}
 			bout.close();
-			al->show();
-			exec();
+			k->reset_variables();
+			k->reset_comboxs();
+			alert al(NULL, this, 0);
+			al.show();
+			al.modality();
 		});
 	site_button.events().click([=]
 		{
@@ -103,8 +103,11 @@ del::del(nana::window wd, const ::nana::size& sz, const nana::appearance& apr): 
 			}
 			sout.close();
 			uout.close();
-			al->show();
-			exec();
+			k->reset_variables();
+			k->reset_comboxs();
+			alert al(NULL, this, 0);
+			al.show();
+			al.modality();
 		});
 	//*>
 }

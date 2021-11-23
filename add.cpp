@@ -4,19 +4,14 @@
 #include "alert.h"
 #include <iostream>
 #include <fstream>
+#include <thread>
 
 using namespace nana;
 using namespace std;
 
-void add::set_ptr(kid* kk, del* dd, alert* ale)
+add::add(kid* kk, nana::window wd, const ::nana::size& sz, const nana::appearance& apr): nana::form(wd, sz, apr)
 {
 	k = kk;
-	d = dd;
-	al = ale;
-}
-
-add::add(nana::window wd, const ::nana::size& sz, const nana::appearance& apr): nana::form(wd, sz, apr)
-{
 	init_();
 
 	//<*ctor
@@ -28,12 +23,16 @@ add::add(nana::window wd, const ::nana::size& sz, const nana::appearance& apr): 
 				bout << b;
 			else
 			{
+
 				bout.put('\n');
 				bout << b;
 			}
 			bout.close();
-			al->show();
-			exec();
+			k->reset_variables();
+			k->reset_comboxs();
+			alert al(this, NULL, 0);
+			al.show();
+			al.modality();
 		});
 	site_button.events().click([=]
 		{
@@ -45,6 +44,7 @@ add::add(nana::window wd, const ::nana::size& sz, const nana::appearance& apr): 
 				sout << s;
 			else
 			{
+
 				sout.put('\n');
 				sout << s;
 			}
@@ -52,13 +52,17 @@ add::add(nana::window wd, const ::nana::size& sz, const nana::appearance& apr): 
 				uout << u;
 			else
 			{
+
 				uout.put('\n');
 				uout << u;
 			}
 			sout.close();
 			uout.close();
-			al->show();
-			exec();
+			k->reset_variables();
+			k->reset_comboxs();
+			alert al(this, NULL, 0);
+			al.show();
+			al.modality();
 		});
 	//*>
 }

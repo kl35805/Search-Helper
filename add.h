@@ -28,8 +28,7 @@ class add
 	: public nana::form
 {
 public:
-	add(nana::window wd, const ::nana::size& sz = { 380, 180 }, const nana::appearance& apr = { true, true, false, false, false, false, false });
-	void set_ptr(kid* kk, del* dd, alert* al);
+	add(kid* kk, nana::window wd, const ::nana::size& sz = { 380, 180 }, const nana::appearance& apr = { true, true, false, false, false, false, false });
 
 private:
 	void init_()
@@ -92,8 +91,6 @@ protected:
 
 	//<*declarations
 	kid* k;
-	del* d;
-	alert* al;
 	//*>
 };
 

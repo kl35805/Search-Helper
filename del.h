@@ -31,8 +31,7 @@ class del
 	: public nana::form
 {
 public:
-	del(nana::window wd, const ::nana::size& sz = { 380, 180 }, const nana::appearance& apr = { true, true, false, false, false, false, false });
-	void set_ptr(kid* kk, add* aa, alert* ale);
+	del(kid* kk, nana::window wd, const ::nana::size& sz = { 380, 180 }, const nana::appearance& apr = { true, true, false, false, false, false, false });
 	void set_variables(const std::vector<std::string>& vv, const std::map<std::string, std::string>& m1);
 	void load_list();
 
@@ -85,8 +84,6 @@ protected:
 
 	//<*declarations
 	kid* k;
-	add* a;
-	alert* al;
 	std::vector<std::string> Browsers;
 	std::map<std::string, std::string> Website_Urls;
 	//*>

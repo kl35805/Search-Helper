@@ -66,14 +66,6 @@ public:
 		//*>
 	}
 
-	~init_browser()
-	{
-		//<*dtor
-		delete this;
-		//*>
-	}
-
-
 private:
 	void init_()
 	{
