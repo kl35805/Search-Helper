@@ -24,7 +24,7 @@
 
 ![download1](/doc/pic/download1.png)
 
-3. 압축 해제된 폴더에서 Search-Helper-main폴더로 들어간 뒤 Search_Lens.zip파일을 압축 해제합니다.
+3. 압축 해제된 폴더에서 Search-Lens-main폴더로 들어간 뒤 Search_Lens.zip파일을 압축 해제합니다.
 
 ![download2](/doc/pic/download2.png) 
 
