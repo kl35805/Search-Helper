@@ -6,7 +6,7 @@
 - 다운로드 방법
 - 사용법
 - 주의사항
-- 사용한 라이브러리 및 프로그램
+- 사용한 라이브러리, 프로그램 및 그림 출처
 - 프로그램 빌드방법
 - 라이센스
 
@@ -15,7 +15,27 @@
 #### Search_Lens는 프로그램 하나로 간단하게 원하는 브라우저와 사이트를 골라 검색할 내용을 입력하면 바로 검색 결과 창을 띄워주는 프로그램입니다
 
 # 다운로드 방법
-  
+
+1. github 화면에서 'Code'버튼을 누른 후 'Download ZIP'을 눌러 zip 파일을 다운받아줍니다.
+
+![download0](/doc/pic/download0.png)
+
+2. 다운받은 압축 파일을 압축 해제합니다.
+
+![download1](/doc/pic/download1.png)
+
+3. 압축 해제된 폴더에서 Search-Helper-main폴더로 들어간 뒤 Search_Lens.zip파일을 압축 해제합니다.
+
+![download2](/doc/pic/download2.png) 
+
+4. 압축 해제된 Search_Lens 폴더
+
+![download3](/doc/pic/download3.png)
+
+5. Search_Lens 폴더 안에 있는 Search_Lens.exe 파일을 실행해주면 됩니다.
+
+![download4](/doc/pic/download4.png)
+
 # 사용법
 
 - ## 처음 실행하기
@@ -148,11 +168,13 @@
  
 # 주의사항
 
-  - txt파일 수정금지
-  - bmp파일 수정금지
+  - txts폴더 수정금지
+  - browser_icon, website_icon 폴더 수정금지
   위 파일들을 수정했을 때 프로그램 오류가 발생할 수 있습니다.
+  - 실행 파일과 txts, browser_icon, website_icon 폴더는 반드시 함께 있어야합니다.
+  - 띄어쓰기를 인식 못하기 때문에 띄어쓰기를 하지 않고 검색해주세요.
 
-# 사용한 라이브러리 및 프로그램
+# 사용한 라이브러리, 프로그램 및 출처
 
 GUI만드는데 사용한 라이브러리
 
@@ -167,6 +189,8 @@ nana creator
 LinK : [nana creator][nacrealink]
 
 [nacrealink]: https://github.com/besh81/nana-creator "nana creator"
+
+실행 파일 아이콘 출처: 만화 "우에키의 법칙"
 
 # 프로젝트 빌드방법
 
