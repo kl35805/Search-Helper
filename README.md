@@ -1,4 +1,4 @@
-# Search-Helper
+# Search-Lens
 
 ## 차례
 
@@ -88,7 +88,7 @@
 
 ![addbrow1](/doc/pic/addbrow1.png)
 
-3. 'Add_setting' 창에서 왼쪽 큰 창에 브라우저 이름을 입력합니다
+3. 'Add_setting' 창에서 왼쪽 큰 창에 브라우저의 확장자를 제외한 파일명을  입력합니다
 
 ![addbrow2](/doc/pic/addbrow2.png)
 
@@ -171,7 +171,7 @@
   - txts폴더 수정금지
   - browser_icon, website_icon 폴더 수정금지
   위 파일들을 수정했을 때 프로그램 오류가 발생할 수 있습니다.
-  - 실행 파일과 txts, browser_icon, website_icon 폴더는 반드시 함께 있어야합니다.
+  - .exe 실행 파일과 txts, browser_icon, website_icon 폴더는 반드시 동일한 디렉터리에 존재해야 합니다.
   - 띄어쓰기를 인식 못하기 때문에 띄어쓰기를 하지 않고 검색해주세요.
 
 # 사용한 라이브러리, 프로그램 및 출처
@@ -192,9 +192,9 @@ LinK : [nana creator][nacrealink]
 
 실행 파일 아이콘 출처: 만화 "우에키의 법칙"
 
-# 프로젝트 빌드방법
+# 프로젝트 수정방법
 
-nana library가 준비된 환경에서 소스 파일, 헤더 파일을 다운받아 빌드하고 수정하면 됩니다.
+nana library가 빌드되어 있는 환경(비주얼 스튜디오 프로젝트 등)에 소스 파일, 헤더 파일을 다운받아 넣은 뒤 수정하면 됩니다.
 
 # 라이센스
 
