@@ -107,7 +107,11 @@ void kid::reg_events()
 
 	letsgo.events().click([=]
 		{
+			searchbar.hide();
+			upper_lip.move(nana::rectangle(49, 151, 270, 12));
+			lower_lip.move(nana::rectangle(49, 163, 270, 12));
 			open_search();
+			searchbar.caption("");
 		});
 
 	browser.events().text_changed([=]
