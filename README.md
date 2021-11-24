@@ -54,7 +54,7 @@
 
 - ## 검색하기
 
-    예시로'edge'에서 'youtube'에 '광운대학교'를 검색해보겠습니다.
+    예시로 "edge"에서 "youtube"에 "광운대학교"를 검색해보겠습니다.
   
 1. 로봇의 왼쪽 눈썹을 눌러 브라우저를 선택합니다
 
@@ -88,7 +88,7 @@
 
 ![addbrow1](/doc/pic/addbrow1.png)
 
-3. 'Add_setting' 창에서 왼쪽 큰 창에 브라우저의 확장자를 제외한 파일명을  입력합니다
+3. 'Add_setting' 창에서 왼쪽 큰 창에 브라우저의 확장자를 제외한 파일명을 정확하게 입력합니다
 
 ![addbrow2](/doc/pic/addbrow2.png)
 
@@ -178,7 +178,7 @@
 
 # 사용한 라이브러리, 프로그램 및 출처
 
-GUI만드는데 사용한 라이브러리
+GUI 제작에 사용한 라이브러리
 
 nana library
 Link : [nana library][naliblink]
@@ -200,9 +200,11 @@ nana library가 빌드되어 있는 환경(비주얼 스튜디오 프로젝트 �
 
 # 라이센스
 
-    - [MIT License](https://opensource.org/licenses/MIT)
-    - [Boost Software License(Nana Library)](https://www.boost.org/LICENSE_1_0.txt)
-    - [GNU General Public License v3.0(nana creator)](https://github.com/besh81/nana-creator/blob/master/LICENSE)
+[MIT License](https://opensource.org/licenses/MIT)
+
+[Boost Software License - Version 1.0(Nana Library)](https://www.boost.org/LICENSE_1_0.txt)
+
+[GNU General Public License v3.0(nana creator)](https://github.com/besh81/nana-creator/blob/master/LICENSE)
 
 
 
