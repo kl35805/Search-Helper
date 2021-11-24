@@ -200,9 +200,9 @@ nana library가 빌드되어 있는 환경(비주얼 스튜디오 프로젝트 �
 
 # 라이센스
 
-[MIT License](https://opensource.org/licenses/MIT)
-[Boost Software License(Nana Library](https://www.boost.org/LICENSE_1_0.txt)
-[GNU General Public License v3.0(nana creator)](https://github.com/besh81/nana-creator/blob/master/LICENSE)
+    -[MIT License](https://opensource.org/licenses/MIT)
+    -[Boost Software License(Nana Library](https://www.boost.org/LICENSE_1_0.txt)
+    -[GNU General Public License v3.0(nana creator)](https://github.com/besh81/nana-creator/blob/master/LICENSE)
 
 
 
