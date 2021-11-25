@@ -62,7 +62,7 @@ private:
 	{
 		place_.bind(*this);
 		place_.div("vert margin=[5,5,5,5] <margin=[5,5,5,5] <margin=[25,15,10,15] gap=2 left_eyebrow><margin=[5,5,5,5] gap=2 between><margin=[25,15,10,15] gap=2 right_eyebrow>><margin=[5,5,5,5] <margin=[0,30,0,30] gap=2 left_eye><margin=[25,40,0,40] gap=2 nose><margin=[0,30,0,30] gap=2 right_eye>><margin=[20,45,20,45] gap=2 arrange=[variable,30] mouse>");
-		caption("Win_Search_Helper");
+		caption("Win_Search_Lens");
 		bgcolor(nana::color(255, 223, 196));
 		// browser
 		browser.create(*this);

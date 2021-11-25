@@ -4,7 +4,7 @@
 #include "alert.h"
 #include "failure.h"
 
-alert::alert(add* aa, del* dd, nana::window wd, const ::nana::size& sz, const nana::appearance& apr): nana::form(wd, sz, apr)
+failure::failure(add* aa, del* dd, nana::window wd, const ::nana::size& sz, const nana::appearance& apr) : nana::form(wd, sz, apr)
 {
 	a = aa;
 	d = dd;

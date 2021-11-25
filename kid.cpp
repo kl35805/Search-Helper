@@ -2,6 +2,7 @@
 #include "add.h"
 #include "del.h"
 #include "alert.h"
+#include "failure.h"
 #include <nana/gui.hpp>
 #include <nana/gui/place.hpp>
 #include <nana/gui/widgets/combox.hpp>

@@ -71,7 +71,7 @@ private:
 	{
 		place_.bind(*this);
 		place_.div("vert margin=[5,5,5,5] <margin=[5,5,5,5] gap=2 arrange=[variable,50] notice><vert weight=130 margin=[5,5,5,5] gap=2 list>");
-		caption("Form");
+		caption("Init");
 		// text
 		text.create(*this);
 		place_["notice"] << text;
